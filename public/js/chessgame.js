@@ -245,7 +245,21 @@ socket.on("move", move=>{
   lastMove = move;
 
   if(move.captured){
-    captureSound.currentTime = 0; captureSound.play();
+
+    const targetCell = document.querySelector(`[data-square="${move.to}"]`);
+
+  if(targetCell){
+      const boom = document.createElement("div");
+      boom.className = "capture-effect";
+      boom.textContent = "💥";
+      targetCell.appendChild(boom);
+
+      setTimeout(()=>{
+        boom.remove();
+      },450);
+  }
+    captureSound.currentTime = 0;
+     captureSound.play();
   } else { moveSound.currentTime = 0; moveSound.play(); }
 
   if(move.captured){
@@ -266,8 +280,7 @@ socket.on("move", move=>{
     const winner = chess.turn() === "w" ? "Black" : "White";
     setTimeout(()=>{
       winSound.currentTime = 0; winSound.play();
-      alert(`Checkmate! ${winner} wins!`);
-      location.reload();
+      showCheckmateScreen(winner);
     },150);
   } else if(chess.in_check()){
     statusEl.textContent = "⚠ CHECKMATE!";
@@ -296,3 +309,25 @@ socket.on("gameOver", msg => {
     location.reload();
   }, 200);
 });
+
+
+function showCheckmateScreen(winner){
+
+  const screen = document.createElement("div");
+  screen.className = "checkmate-screen";
+
+  screen.innerHTML = `
+      <div class="checkmate-title">👑 CHECKMATE</div>
+      <div>${winner} Wins!</div>
+      <button id="playAgainBtn"
+      style="margin-top:20px;padding:10px 20px;border:none;background:#22c55e;border-radius:6px;">
+      Play Again
+      </button>
+  `;
+
+  document.body.appendChild(screen);
+
+  document.getElementById("playAgainBtn").onclick = ()=>{
+      location.reload();
+  };
+}
