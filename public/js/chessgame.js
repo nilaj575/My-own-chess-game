@@ -301,9 +301,9 @@ socket.on("spectatorCount", count=>{
 });
 
 socket.on("gameOver", msg => {
-  clearInterval(interval);
   winSound.currentTime = 0;
   winSound.play();
+  clearInterval(interval);
   setTimeout(() => {
     alert(msg);
     location.reload();
