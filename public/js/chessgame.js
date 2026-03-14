@@ -42,6 +42,7 @@ let spectatorRoom = null;
 
 let selectedSquare = null;
 let lastMove = null;
+let touchSelected = null;
 
 
 const pieceMap = {
@@ -138,6 +139,57 @@ function renderBoard(){
         socket.emit("move",{ roomId, move:{from,to:square,promotion:"q"} });
       });
 
+
+      cell.addEventListener("click", () => {
+
+  if(spectatorRoom || !roomId) return;
+
+  const piece = chess.get(square);
+
+  /* selecting piece */
+  if(!touchSelected){
+
+  if(piece && piece.color === playerRole && chess.turn() === playerRole){
+
+    touchSelected = square;
+
+    document.querySelectorAll(".selected-piece")
+      .forEach(el => el.classList.remove("selected-piece"));
+
+    cell.classList.add("selected-piece");
+
+    showLegalMoves(square);
+  }
+
+  return;
+  }
+
+  /* same square cancel */
+  if(touchSelected === square){
+    touchSelected = null;
+    document.querySelectorAll(".move-dot").forEach(d=>d.remove());
+    return;
+  }
+
+  /* attempt move */
+  socket.emit("move",{
+    roomId,
+    move:{
+      from: touchSelected,
+      to: square,
+      promotion:"q"
+    }
+  });
+
+  touchSelected = null;
+  document.querySelectorAll(".move-dot").forEach(d=>d.remove());
+  document.querySelectorAll(".selected-piece")
+  .forEach(el => el.classList.remove("selected-piece"));
+
+});
+
+
+
       boardEl.appendChild(cell);
     });
   });
@@ -205,6 +257,7 @@ socket.on("move", move=>{
   }
 
   chess.move(move);
+  touchSelected = null;
   renderBoard();
   startTurnTimer();
 
