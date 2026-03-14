@@ -228,6 +228,7 @@ socket.on("paired", data => {
     boardEl.classList.remove("hidden");
     capturedContainer.classList.remove("hidden");
     spectatorContainer.classList.remove("hidden");
+    document.getElementById("specatator").classList.remove("hidden");
 
     if(playerRole==="b") boardEl.classList.add("flipped");
     whiteNameEl.textContent = playerRole==="w" ? "You" : "Waiting";
