@@ -61,6 +61,15 @@
 .piece.white { color: #00bfff; text-shadow: 0 0 3px #000; }
 .piece.black { color: orange; text-shadow: 0 0 3px #000; }
 
+
+/* SELECTED PIECE */
+
+.selected-piece{
+    outline: 4px solid #22c55e;
+    outline-offset: -4px;
+    box-shadow: inset 0 0 12px rgba(34,197,94,0.7);
+}
+
 /* LEGAL MOVE DOT */
 .move-dot {
     width: 18px;
