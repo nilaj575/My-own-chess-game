@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=0.7">
 <title>Nilaj own Chess</title>
 <link rel="icon" href="/images/chess.png"  type="image/jpeg" />
 <link rel="stylesheet" href="/css/chess.css">
@@ -17,14 +17,14 @@
 
     <!-- Status -->
      <div id="status" class="status-box">
-        <div id="pieceLoader" class="piece-loader">♟</div>
-        <div class="loading-text">
-            Connecting to room<span class="dots"></span>
-        </div>
+        
     </div>
     <!-- Spectator Link -->
+     <div id="specatator" class="hidden flex flex-col items-center justify-center gap-2">
+        <span>Spectator Link⬇️</span>
     <div id="spectateLink" class="text-blue-400 underline hidden">
-        <a id="spectateLinkAnchor" href="#" target="_blank">Spectator Link</a>
+        <a id="spectateLinkAnchor" href="#" target="_blank"></a>
+    </div>
     </div>
 
     <!-- Players -->
